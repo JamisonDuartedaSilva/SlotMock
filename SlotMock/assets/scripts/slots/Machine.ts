@@ -1,4 +1,5 @@
 import Aux from '../SlotEnum';
+import Tile from './Tile';
 
 const { ccclass, property } = cc._decorator;
 
@@ -83,6 +84,37 @@ export default class Machine extends cc.Component {
     this.button.getComponent(cc.Button).interactable = false;
   }
 
+  getRandomPercentage() : number
+  {
+    return Math.random() * (100 - 1) + 1;
+  }
+
+  getRandomTile() : number
+  {
+    return Math.floor(Math.random() * (20));  
+  }
+
+  getRandomPatern() : Array<number>
+  {
+    const rndPerc = this.getRandomPercentage();
+    let tileResult : Array<number>;
+    let tile1 : number = this.getRandomTile();
+    let tile2 : number = this.getRandomTile();
+    let tile3 : number = this.getRandomTile();
+
+    if ((rndPerc < 33) && (rndPerc > 10))
+      tileResult = [null , tile1, null];
+    else if ((rndPerc < 10) && (rndPerc > 7))
+      tileResult = [null, tile1, tile2];
+    else if (rndPerc < 7)
+      tileResult = [tile1, tile2, tile3];
+    else
+      tileResult = [null, null, null];
+
+    console.log(tileResult);
+    return tileResult;  
+  }
+   
   stop(result: Array<Array<number>> = null): void {
     setTimeout(() => {
       this.spinning = false;
@@ -91,11 +123,16 @@ export default class Machine extends cc.Component {
     }, 2500);
 
     const rngMod = Math.random() / 2;
+    
+    let tileResult : Array<number>;
+    tileResult = this.getRandomPatern();
+
     for (let i = 0; i < this.numberOfReels; i += 1) {
       const spinDelay = i < 2 + rngMod ? i / 4 : rngMod * (i - 2) + i / 4;
       const theReel = this.reels[i].getComponent('Reel');
 
       setTimeout(() => {
+        result[i] = [...tileResult];
         theReel.readyStop(result[i]);
       }, spinDelay * 1000);
     }
