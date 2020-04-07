@@ -137,4 +137,15 @@ export default class Machine extends cc.Component {
       }, spinDelay * 1000);
     }
   }
+
+  btIncreaseReelsClick() : void {
+    if (!(this.numberOfReels >= 6))
+      this.numberOfReels += 1; 
+  }
+
+  btDecreaseReelsClick() : void
+  {
+    if (!(this.numberOfReels <= 3))
+      this.numberOfReels -= 1;
+  }
 }
