@@ -48,6 +48,7 @@ export default class Reel extends cc.Component {
   shuffle(): void {
     for (let i = 0; i < this.tiles.length; i += 1) {
       this.tiles[i].getComponent('Tile').setRandom();
+      this.tiles[i].getComponent('Tile').stopGlow();
     }
   }
 
@@ -61,17 +62,19 @@ export default class Reel extends cc.Component {
     const el = element;
     const dirModifier = this.spinDirection === Aux.Direction.Down ? -1 : 1;
     if (el.position.y * dirModifier > 288) {
-      el.position = cc.v2(0, -288 * dirModifier);
-
-      let pop = null;
+      el.position = cc.v2(0, -288 * dirModifier);      
+      let pop = null;        
+      
       if (this.result != null && this.result.length > 0) {
         pop = this.result.pop();
       }
-
+        
       if (pop != null && pop >= 0) {
         el.getComponent('Tile').setTile(pop);
+        el.getComponent('Tile').playGlow();          
       } else {
         el.getComponent('Tile').setRandom();
+        el.getComponent('Tile').stopGlow();           
       }
     }
   }

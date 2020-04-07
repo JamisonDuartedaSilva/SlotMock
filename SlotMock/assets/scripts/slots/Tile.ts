@@ -24,6 +24,21 @@ export default class Tile extends cc.Component {
     });
   }
 
+  playGlow() : void
+  {
+    let anim : cc.Animation;
+    anim = this.getComponentInChildren(cc.Animation);
+    anim.play();  
+  }
+
+  stopGlow() : void
+  {
+    let anim : cc.Animation;
+    anim = this.getComponentInChildren(cc.Animation);
+    anim.setCurrentTime(0);
+    anim.stop();      
+  }
+
   setTile(index: number): void {
     this.node.getComponent(cc.Sprite).spriteFrame = this.textures[index];
   }
