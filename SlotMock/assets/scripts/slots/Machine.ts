@@ -139,13 +139,13 @@ export default class Machine extends cc.Component {
   }
 
   btIncreaseReelsClick() : void {
-    if (!(this.numberOfReels >= 6))
+    if ((!(this.numberOfReels >= 6)) && (!this.spinning))
       this.numberOfReels += 1; 
   }
 
   btDecreaseReelsClick() : void
   {
-    if (!(this.numberOfReels <= 3))
+    if ((!(this.numberOfReels <= 3)) && (!this.spinning))
       this.numberOfReels -= 1;
   }
 }
